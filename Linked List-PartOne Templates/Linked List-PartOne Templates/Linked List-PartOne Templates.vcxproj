@@ -14,7 +14,7 @@
     <ProjectGuid>{C399EF50-BEF2-445D-AC8D-D32495EC7880}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LinkedListPartOneTemplates</RootNamespace>
-    <ProjectName>Linked List-PartTwo</ProjectName>
+    <ProjectName>Linked List and Template</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -80,12 +80,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DemoLetter.h" />
+    <ClInclude Include="DemoLetterChild.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Template_Single_Linked_List.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Linked List-PartOne Templates.cpp" />
+    <ClCompile Include="DemoLetter.cpp" />
+    <ClCompile Include="DemoLetterChild.cpp" />
+    <ClCompile Include="Linked List and Templates.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-template<typename Type> class LinkedList_Iter;
+template<class Type> class LinkedList_Iter;
 
-template <typename TempType>
+template <class TempType>
 class Template_Single_Linked_List
 {
 	
@@ -10,7 +10,9 @@ class Template_Single_Linked_List
 
 	friend class LinkedList_Iter < TempType >;
 public:
-	
+	// made to do a call back when I call the drop function
+	void(*DropCallBackFuncptr)(TempType ObjtoCallBackOn);
+
 	unsigned int counter = 0;
 	Template_Node* root_Head;
 	Template_Node* end_Tail;
@@ -18,6 +20,7 @@ public:
 	{
 		TempType* Var;
 		Template_Node* Next;
+
 	};
 
 	Template_Single_Linked_List();
@@ -30,33 +33,33 @@ public:
 	void addTail(TempType& addMe);
 	void Insert(LinkedList_Iter<TempType>& index, TempType& v);
 	void remove(LinkedList_Iter<TempType>& index);
-	
+	TempType& Drop(LinkedList_Iter<TempType>& index);
 	void EmptyList();
 };
-template <typename TempType>
+template <class TempType>
 Template_Single_Linked_List<TempType>::Template_Single_Linked_List()
 {
 	root_Head = nullptr;
 	end_Tail = nullptr;
 }
-template <typename TempType>
+template <class  TempType>
 Template_Single_Linked_List<TempType>::~Template_Single_Linked_List()
 {
 	EmptyList();
 }
 
-template <typename TempType>
+template <class  TempType>
 void Template_Single_Linked_List<TempType>::ShowValue(int i)
 {
 	std::cout << (*(this))[i] << std::endl;
 }
 
-template <typename TempType>
+template <class TempType>
 void Template_Single_Linked_List<TempType>::CombineValues(TempType addThisToVar)
 {
 	//std::cout << Var + addThisToVar << std::endl;
 }
-template <typename TempType>
+template <class  TempType>
 TempType& Template_Single_Linked_List<TempType>::operator[](unsigned int Index)
 {
 	
@@ -67,7 +70,7 @@ TempType& Template_Single_Linked_List<TempType>::operator[](unsigned int Index)
 	}
 	return *(Iter->Var);
 }
-template <typename TempType>
+template <class  TempType>
 void Template_Single_Linked_List<TempType>::addHead(TempType& addMe)
 {
 	counter++;
@@ -86,8 +89,10 @@ void Template_Single_Linked_List<TempType>::addHead(TempType& addMe)
 		root_Head = New_Head;
 		
 	}
+	
+	
 }
-template <typename TempType>
+template <class TempType>
 void Template_Single_Linked_List<TempType>::addTail(TempType& addMe)
 {
 	counter++;
@@ -107,8 +112,10 @@ void Template_Single_Linked_List<TempType>::addTail(TempType& addMe)
 		end_Tail=New_Tail;
 		
 	}
+	
+	
 }
-template <typename TempType> void
+template <class TempType> void
 Template_Single_Linked_List<TempType>::EmptyList()
 {
 	Template_Node* temp = nullptr;
@@ -117,13 +124,14 @@ Template_Single_Linked_List<TempType>::EmptyList()
 		temp = root_Head;
 	
 		root_Head = root_Head->Next;
+		// deletes node but acutal var it was point to, becuase just held a memory address
 		delete temp;
 	}
 	root_Head = nullptr;
 	counter = 0;
 }
 
-template <typename TempType> void
+template <class TempType> void
 Template_Single_Linked_List<TempType>::Insert(LinkedList_Iter<TempType>& index, TempType& v)
 {
 	if (index.CurrentNode == root_Head &&  root_Head != nullptr)
@@ -142,7 +150,7 @@ Template_Single_Linked_List<TempType>::Insert(LinkedList_Iter<TempType>& index, 
 	counter++;
 }
 
-template <typename TempType> void
+template <class TempType> void
 Template_Single_Linked_List<TempType>::remove(LinkedList_Iter<TempType>& index)
 {
 	if (root_Head != nullptr && index.CurrentNode == root_Head)
@@ -164,7 +172,35 @@ Template_Single_Linked_List<TempType>::remove(LinkedList_Iter<TempType>& index)
 		counter--;
 	}
 }
-template <typename TempType>
+template <class TempType> TempType&
+Template_Single_Linked_List<TempType>::Drop(LinkedList_Iter<TempType>& index)
+{
+	TempType*returnPointer = nullptr;
+	if (root_Head != nullptr && index.CurrentNode == root_Head)
+	{
+		root_Head = index.CurrentNode->Next;
+		returnPointer= index.CurrentNode->Var;
+		delete  index.CurrentNode;
+		index.CurrentNode = root_Head;
+		counter--;
+
+	}
+	else if (index.CurrentNode)
+	{
+
+
+		index.PrevNode->Next = index.CurrentNode->Next;
+		returnPointer = index.CurrentNode->Var;
+		delete  index.CurrentNode;
+		index.CurrentNode = index.PrevNode->Next;
+
+		counter--;
+	}
+	if(DropCallBackFuncptr)
+	this->DropCallBackFuncptr(*returnPointer);
+	return *returnPointer;
+}
+template <class TempType>
  class LinkedList_Iter
 {
 	    friend class Template_Single_Linked_List <TempType>;
@@ -191,27 +227,27 @@ public:
 
 
 
- template <typename TempType> LinkedList_Iter<TempType>::
+ template <class TempType> LinkedList_Iter<TempType>::
 LinkedList_Iter(Template_Single_Linked_List<TempType>& listToIterate)
  {
 	 list = &listToIterate;
 	 begin();
  }
 
- template <typename TempType> void LinkedList_Iter<TempType>::
+ template <class TempType> void LinkedList_Iter<TempType>::
 	 begin()
  {
 	 CurrentNode = list->root_Head;
 	 PrevNode = nullptr;
  }
 
- template <typename TempType> bool LinkedList_Iter<TempType>::
+ template <class TempType> bool LinkedList_Iter<TempType>::
 	end()
  {
 	 return(!CurrentNode);
  }
 
- template <typename TempType> LinkedList_Iter<TempType>&  LinkedList_Iter<TempType>::
+ template <class TempType> LinkedList_Iter<TempType>&  LinkedList_Iter<TempType>::
 	 operator++()
  {
 	 if (CurrentNode != nullptr && list->counter != 0)
@@ -223,12 +259,12 @@ LinkedList_Iter(Template_Single_Linked_List<TempType>& listToIterate)
 	 }
 	 return *this;
  }
- template <typename TempType> LinkedList_Iter<TempType>&   LinkedList_Iter<TempType>::
+ template <class TempType> LinkedList_Iter<TempType>&   LinkedList_Iter<TempType>::
 	 operator++(int)
  {
 	 return ++(*(this));
  }
- template <typename TempType> TempType&  LinkedList_Iter<TempType>::
+ template <class TempType> TempType&  LinkedList_Iter<TempType>::
 	current() const
  {
 	 return(*(CurrentNode->Var));

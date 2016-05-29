@@ -27,12 +27,24 @@
     <ClInclude Include="Template_Single_Linked_List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DemoLetter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoLetterChild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Linked List-PartOne Templates.cpp">
+    <ClCompile Include="Linked List and Templates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoLetter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoLetterChild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
