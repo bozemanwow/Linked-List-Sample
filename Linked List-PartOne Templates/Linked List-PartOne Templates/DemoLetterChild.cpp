@@ -13,5 +13,5 @@ DemoLetterChild::~DemoLetterChild()
 }
 void DemoLetterChild::DisplaySomething()
 {
-	std::cout << " Child Item Droped "<< letter << std::endl;
+	std::cout << " I am a Dropped Child "<< letter << std::endl;
 }

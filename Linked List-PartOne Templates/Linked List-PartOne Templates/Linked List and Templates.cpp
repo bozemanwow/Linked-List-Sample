@@ -90,21 +90,25 @@ int _tmain(int argc, _TCHAR* argv[])
 	// using static function of a class to use a c funcptr to do a drop call back within the template class
 	// not useing member function pointers to avoid storing a member function ptr for each item added to the list
 	DemoLetterList.DropCallBackFuncptr = DemoLetter::DroppedCallBackFunc;
-	// Allocate space for child and parent
-	DemoLetter* ParnetPointer = new DemoLetter();
-	DemoLetter* ChildPointer = new DemoLetterChild();
-	
-	DemoLetterList.addHead(ParnetPointer);
-	DemoLetterList.addHead(ChildPointer);
+	// Allocate space for child and parent, braces are uses to make pointers fall out of scope
+	{
+		
+		DemoLetter* ParnetPointer = new DemoLetter();
+		DemoLetter* ChildPointer = new DemoLetterChild();
+		// copies by value the pointers into the list, so just the memory addresses
+		DemoLetterList.addHead(ParnetPointer);
+		DemoLetterList.addHead(ChildPointer);
+	}
 
 	DemoIter.begin();
-	DemoLetter* DemoParnetptr = DemoLetterList.Drop(DemoIter);
+	// returns a ref of a pointers, copies the values (memory address into the fresh pointers)
 	DemoLetter* DemoChildptr = DemoLetterList.Drop(DemoIter);
+	DemoLetter* DemoParentptr = DemoLetterList.Drop(DemoIter);
 	std::cout <<"After Caught Pointers "  << std::endl;
-	DemoParnetptr->DisplaySomething();
+	DemoParentptr->DisplaySomething();
 	DemoChildptr->DisplaySomething();
 	// Free Space that been allocated, remove and drop only delete the node
-	delete DemoParnetptr;
+	delete DemoParentptr;
 	delete DemoChildptr;
 	system("pause");
 	return 0;

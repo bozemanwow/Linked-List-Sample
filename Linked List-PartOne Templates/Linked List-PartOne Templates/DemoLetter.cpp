@@ -13,7 +13,7 @@ DemoLetter::~DemoLetter()
 }
 void DemoLetter::DisplaySomething()
 {
-	std::cout << "I am Dropped Parent " << letter<< std::endl;
+	std::cout << "I am a Dropped Parent " << letter<< std::endl;
 }
 
 void DemoLetter::DroppedCallBackFunc(DemoLetter* _Me)

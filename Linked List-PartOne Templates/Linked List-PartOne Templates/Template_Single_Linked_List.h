@@ -33,6 +33,7 @@ public:
 	void addTail(TempType& addMe);
 	void Insert(LinkedList_Iter<TempType>& index, TempType& v);
 	void remove(LinkedList_Iter<TempType>& index);
+	// deletes node and returns what was being used
 	TempType& Drop(LinkedList_Iter<TempType>& index);
 	void EmptyList();
 };
